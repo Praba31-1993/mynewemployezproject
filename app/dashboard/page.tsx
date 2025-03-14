@@ -10,7 +10,7 @@ import PayrollAdminDashboard from "./screens/payrolladmin";
 import TimecoordinatorDashboard from "./screens/timecoordinator";
 import PayRoleExecutiveDashboard from "./screens/payrollexecutive";
 import SalesManagerDashboard from "./screens/salesManager";
-import Sidebar from "../sidebar/page";
+import Sidebar from "../sidebar/layout";
 
 const Dashboard = () => {
   const [role, setRole] = useState<string | null>(null);
