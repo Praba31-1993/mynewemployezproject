@@ -52,14 +52,6 @@ import {
 import Timeloader from "../reusableComponent/loader/timeloader";
 import dynamic from "next/dynamic";
 
-const getMenuItems = (role: string) => {
-  return role === "SA"
-    ? menuForSuperAdmin
-    : role === "E"
-    ? menuItemForEmployee
-    : [];
-};
-
 const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hideToggle, sethideToggle] = useState(false);
@@ -72,13 +64,20 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
 
   const [auth, setAuth] = useState<String | null>(null);
   const selectedColor = useSelector((state: RootState) => state.color.color);
+  const [role, setRole] = useState<string | null>(null);
+
   const router = useRouter();
   const isClient = typeof window !== "undefined";
-  const selectedMeedingModeBorder = useSelector(
-    (state: RootState) => state.meetingmode.background
-  );
+  const getMenuItems = (role: string | null) => {
+    if (!role) return []; // Handle null case
+    return role === "SA"
+      ? menuForSuperAdmin
+      : role === "E"
+      ? menuItemForEmployee
+      : [];
+  };
 
-  const menuItems = getMenuItems("E");
+  const menuItems = getMenuItems(role);
   const [menuLists, setMenuLists] = useState(menuItems);
   const NavbarDynamicComponents = dynamic(
     () => import("../reusableComponent/appbar"),
@@ -87,6 +86,17 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const DraggableDynamicComponents = dynamic(
     () => import("../reusableComponent/draggable"),
     { ssr: false }
+  );
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const userRole = localStorage.getItem("Role");
+      setRole(userRole);
+    }
+  }, []);
+
+  const selectedMeedingModeBorder = useSelector(
+    (state: RootState) => state.meetingmode.background
   );
 
   useEffect(() => {
