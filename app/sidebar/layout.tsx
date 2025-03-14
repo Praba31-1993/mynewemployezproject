@@ -70,27 +70,26 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const [visibleMenus, setVisibleMenus] = useState(false);
   const pathname = usePathname();
   const [expanded, setExpanded] = React.useState<string | false>(false);
+  const [storedValue, setStoredValue] = useState(null);
 
   const [auth, setAuth] = useState<String | null>(null);
 
   const selectedColor = useSelector((state: RootState) => state.color.color);
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
   const selectedMeedingModeBorder = useSelector(
     (state: RootState) => state.meetingmode.background
   );
 
   const router = useRouter();
 
-  const role: any = isClient && localStorage.getItem("Role");
+  const role: any =
+    typeof window !== "undefined" ? localStorage.getItem("Role") : null;
+  setStoredValue(role);
   const menuItems = getMenuItems(role);
   const [menuLists, setMenuLists] = useState(menuItems);
 
   useEffect(() => {
-    const token: any = isClient && localStorage.getItem("token");
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
     setAuth(token);
 
     // Redirect to login if token is not available
@@ -100,7 +99,8 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
   }, [router]);
 
   useEffect(() => {
-    const pinned = isClient && localStorage.getItem("pinned");
+    const pinned =
+      typeof window !== "undefined" ? localStorage.getItem("pinned") : null;
     if (pinned !== null) {
       setIsOpen(pinned === "true");
       setIsChecked(pinned === "true");
@@ -110,8 +110,8 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
     setIsChecked(checked);
-    if (isClient) {
-      localStorage.setItem("pinned", checked.toString());
+    if (typeof window !== "undefined") {
+      localStorage.setItem("pinned", isChecked.toString());
     }
     setIsOpen(checked);
   };
