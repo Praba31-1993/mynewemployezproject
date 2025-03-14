@@ -44,7 +44,6 @@ import PaidOutlinedIcon from "@mui/icons-material/PaidOutlined";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import BubbleChartOutlinedIcon from "@mui/icons-material/BubbleChartOutlined";
 import DnsOutlinedIcon from "@mui/icons-material/DnsOutlined";
-import { ReactNode } from "react";
 
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { Colors } from "../reusableComponent/styles";
@@ -62,7 +61,7 @@ const getMenuItems = (role: string) => {
     : [];
 };
 
-const Sidebar = ({ children }: { children: ReactNode }) => {
+const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hideToggle, sethideToggle] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
