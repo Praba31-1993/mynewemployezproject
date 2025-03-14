@@ -54,10 +54,6 @@ import {
 } from "../reusableComponent/sidebarJson";
 import Timeloader from "../reusableComponent/loader/timeloader";
 
-interface SidebarProps {
-  children?: ReactNode;
-}
-
 const getMenuItems = (role: string) => {
   return role === "SA"
     ? menuForSuperAdmin
@@ -66,7 +62,7 @@ const getMenuItems = (role: string) => {
     : [];
 };
 
-const Sidebar = ({ children }: SidebarProps) => {
+const Sidebar = ({ children }: { children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hideToggle, sethideToggle] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
