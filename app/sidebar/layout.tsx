@@ -70,21 +70,17 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const [visibleMenus, setVisibleMenus] = useState(false);
   const pathname = usePathname();
   const [expanded, setExpanded] = React.useState<string | false>(false);
-  const [storedValue, setStoredValue] = useState(null);
 
   const [auth, setAuth] = useState<String | null>(null);
 
   const selectedColor = useSelector((state: RootState) => state.color.color);
+  const router = useRouter();
+
   const selectedMeedingModeBorder = useSelector(
     (state: RootState) => state.meetingmode.background
   );
 
-  const router = useRouter();
-
-  const role: any =
-    typeof window !== "undefined" ? localStorage.getItem("Role") : null;
-  setStoredValue(role);
-  const menuItems = getMenuItems(role);
+  const menuItems = getMenuItems("E");
   const [menuLists, setMenuLists] = useState(menuItems);
 
   useEffect(() => {
@@ -98,14 +94,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
     }
   }, [router]);
 
-  useEffect(() => {
-    const pinned =
-      typeof window !== "undefined" ? localStorage.getItem("pinned") : null;
-    if (pinned !== null) {
-      setIsOpen(pinned === "true");
-      setIsChecked(pinned === "true");
-    }
-  }, []);
+
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
@@ -116,12 +105,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
     setIsOpen(checked);
   };
 
-  useEffect(() => {
-    const savedExpanded = sessionStorage.getItem("expandedAccordion");
-    if (savedExpanded) {
-      setExpanded(savedExpanded);
-    }
-  }, []);
+
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
