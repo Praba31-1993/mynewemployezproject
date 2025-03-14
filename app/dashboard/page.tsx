@@ -8,7 +8,6 @@ import SuperAdminDashboard from "./screens/superadmin";
 const Sidebar = dynamicImport(() => import("../sidebar/layout"), {
   ssr: false,
 });
-const MemoizedSidebar = React.memo(Sidebar);
 
 const Dashboard = () => {
   return (
