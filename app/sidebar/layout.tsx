@@ -84,28 +84,26 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const [menuLists, setMenuLists] = useState(menuItems);
 
   useEffect(() => {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
-    setAuth(token);
+    if (typeof window !== "undefined" && window.localStorage) {
+      const token =
+        typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      setAuth(token);
 
-    // Redirect to login if token is not available
-    if (!token) {
-      router.push("/login"); // Programmatically navigate to /login
+      // Redirect to login if token is not available
+      if (!token) {
+        router.push("/login"); // Programmatically navigate to /login
+      }
     }
   }, [router]);
-
-
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
     setIsChecked(checked);
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && window.localStorage) {
       localStorage.setItem("pinned", isChecked.toString());
     }
     setIsOpen(checked);
   };
-
-
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
