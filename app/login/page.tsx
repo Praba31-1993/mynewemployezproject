@@ -139,7 +139,7 @@ export default function Login() {
             style={{ background: useColors.themeRed }}
           >
             <h1 className="heading fw-bold text-center py-3 text-white">
-              HR on Cloud
+              HR on Cloud++
             </h1>
             <Player
               autoplay
