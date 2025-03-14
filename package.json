@@ -38,7 +38,12 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "react-datepicker": "^7.5.0",
-    "lucide-react": "^0.456.0"
+    "lucide-react": "^0.456.0",
+    "@mui/utils": "^6.2.0",
+    "@mui/x-data-grid": "^7.23.2",
+    "@mui/x-data-grid-generator": "^7.23.2",
+    "@mui/x-data-grid-premium": "^7.23.2",
+    "@mui/x-date-pickers-pro": "^7.27.0"
 
   },
   "devDependencies": {
