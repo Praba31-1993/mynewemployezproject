@@ -1,18 +1,42 @@
 "use client";
-export const dynamic = "force-dynamic"; // Keep this
-
-import React from "react";
-import { default as dynamicImport } from "next/dynamic"; // Renamed import
+import React, { useState, useEffect } from "react";
 import SuperAdminDashboard from "./screens/superadmin";
-
-const Sidebar = dynamicImport(() => import("../sidebar/layout"), {
-  ssr: false,
-});
-
+import HrDashboard from "./screens/hr";
+import ManagerDashboard from "./screens/manager";
+import EmployeeDashboard from "./screens/employee";
+import RecruiterDashboard from "./screens/recruiter";
+import Immigratorcoordinator from "./screens/immigratorcoordinator";
+import PayrollAdminDashboard from "./screens/payrolladmin";
+import TimecoordinatorDashboard from "./screens/timecoordinator";
+import PayRoleExecutiveDashboard from "./screens/payrollexecutive";
+import SalesManagerDashboard from "./screens/salesManager";
+import Sidebar from "../sidebar/page";
+import dynamic from "next/dynamic";
 const Dashboard = () => {
+  const [role, setRole] = useState<string | null>(null);
+  const Sidebar = dynamic(() => import("../sidebar/layout"), {
+    ssr: false,
+  });
+  
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const userRole = localStorage.getItem("Role");
+      setRole(userRole);
+    }
+  }, []);
+
   return (
     <Sidebar>
-      <SuperAdminDashboard />
+      {role === "SA" && <SuperAdminDashboard />}
+      {role === "HR" && <HrDashboard />}
+      {role === "M" && <ManagerDashboard />}
+      {role === "E" && <EmployeeDashboard />}
+      {role === "R" && <RecruiterDashboard />}
+      {/* <Immigratorcoordinator/> */}
+      {role === "TC" && <TimecoordinatorDashboard />}
+      {/* <PayrollAdminDashboard/> */}
+      {/* <PayRoleExecutiveDashboard/> */}
+      {role === "SM" && <SalesManagerDashboard />}
     </Sidebar>
   );
 };
