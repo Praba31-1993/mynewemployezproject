@@ -13,28 +13,18 @@ import SalesManagerDashboard from "./screens/salesManager";
 import Sidebar from "../sidebar/layout";
 
 const Dashboard = () => {
-  const [role, setRole] = useState<string | null>(null);
-  useEffect(() => {
-    // Ensure this logic runs only on the client-side
-    const userRole =
-      typeof window !== "undefined" ? localStorage.getItem("Role") : null;
-    setRole(userRole);
-  }, []);
-
-  if (!role) return <div>Loading...</div>; // Optional: Show a loader during role fetching
-
   return (
     <Sidebar>
-      {role === "SA" && <SuperAdminDashboard />}
-      {role === "HR" && <HrDashboard />}
-      {role === "M" && <ManagerDashboard />}
-      {role === "E" && <EmployeeDashboard />}
-      {role === "R" && <RecruiterDashboard />}
+      <SuperAdminDashboard />
+      {/* {role === "HR" && <HrDashboard />} */}
+      {/* {role === "M" && <ManagerDashboard />} */}
+      {/* {role === "E" && <EmployeeDashboard />} */}
+      {/* {role === "R" && <RecruiterDashboard />} */}
       {/* <Immigratorcoordinator/> */}
-      {role === "TC" && <TimecoordinatorDashboard />}
+      {/* {role === "TC" && <TimecoordinatorDashboard />} */}
       {/* <PayrollAdminDashboard/> */}
       {/* <PayRoleExecutiveDashboard/> */}
-      {role === "SM" && <SalesManagerDashboard />}
+      {/* {role === "SM" && <SalesManagerDashboard />} */}
     </Sidebar>
   );
 };
