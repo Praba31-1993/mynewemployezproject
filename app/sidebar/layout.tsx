@@ -74,17 +74,23 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const [auth, setAuth] = useState<String | null>(null);
 
   const selectedColor = useSelector((state: RootState) => state.color.color);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   const selectedMeedingModeBorder = useSelector(
     (state: RootState) => state.meetingmode.background
   );
 
   const router = useRouter();
-  const role: any = localStorage.getItem("Role");
+
+  const role: any = isClient && localStorage.getItem("Role");
   const menuItems = getMenuItems(role);
   const [menuLists, setMenuLists] = useState(menuItems);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token: any = isClient && localStorage.getItem("token");
     setAuth(token);
 
     // Redirect to login if token is not available
@@ -94,7 +100,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
   }, [router]);
 
   useEffect(() => {
-    const pinned = localStorage.getItem("pinned");
+    const pinned = isClient && localStorage.getItem("pinned");
     if (pinned !== null) {
       setIsOpen(pinned === "true");
       setIsChecked(pinned === "true");
@@ -104,7 +110,9 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
     setIsChecked(checked);
-    localStorage.setItem("pinned", checked.toString());
+    if (isClient) {
+      localStorage.setItem("pinned", checked.toString());
+    }
     setIsOpen(checked);
   };
 
