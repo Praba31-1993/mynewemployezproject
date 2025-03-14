@@ -74,22 +74,7 @@ export default function NavbarComponent() {
     fetchPrehireData();
   }, []);
 
-  const handleLogOut = () => {
-    document.cookie = "auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-    document.cookie =
-      "authToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-    document.cookie =
-      "refreshToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
 
-    localStorage.removeItem("pin"); // Assuming you stored the sidebar pin state in localStorage
-    localStorage.removeItem("token"); // Assuming you stored the sidebar pin state in localStorage
-    localStorage.removeItem("Firstname");
-    localStorage.removeItem("Lastname");
-    localStorage.removeItem("Role");
-    sessionStorage.clear();
-
-    router.push("/login");
-  };
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

@@ -149,11 +149,13 @@ function TableWithFilterAndSortReusableCode({ salesData }: any) {
         let leftPosition = thRect.left;
 
         if (textNode) {
-          const range = document.createRange();
-          range.setStart(textNode, 0);
-          range.setEnd(textNode, 1); // Select first letter
-          const textRect = range.getBoundingClientRect();
-          leftPosition = textRect.left;
+          if (document !== undefined) {
+            const range = document.createRange();
+            range.setStart(textNode, 0);
+            range.setEnd(textNode, 1); // Select first letter
+            const textRect = range.getBoundingClientRect();
+            leftPosition = textRect.left;
+          }
         }
 
         // Ensure the filter box stays inside the table

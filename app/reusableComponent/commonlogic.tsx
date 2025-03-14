@@ -34,13 +34,15 @@ export const handleCSVExport = (headers: string[], data: any[]) => {
 
   // Create and trigger CSV download
   const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-  const link = document.createElement("a");
-  const url = URL.createObjectURL(blob);
-  link.setAttribute("href", url);
-  link.setAttribute("download", "export.csv");
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  if (document !== undefined) {
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", "export.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 };
 
 export const handleCSVExport1 = (headers: any, data: any[]) => {
@@ -73,43 +75,45 @@ export const handleCSVExport1 = (headers: any, data: any[]) => {
 
 // Print Logic
 export const handlePrint = () => {
-  const printSection = document.querySelector("table"); // Select the table directly
+  if (document !== undefined) {
+    const printSection = document.querySelector("table"); // Select the table directly
 
-  if (printSection) {
-    const printWindow = window.open("", "", "height=500,width=800");
+    if (printSection) {
+      const printWindow = window.open("", "", "height=500,width=800");
 
-    if (printWindow) {
-      printWindow.document.write(`
-        <html>
-          <head>
-            <title>Print</title>
-            <style>
-              /* Add necessary styles to preserve layout */
-              body { font-family: Arial, sans-serif; margin: 20px; }
-              table { border-collapse: collapse; width: 100%; }
-              theade{background-color: rgb(246, 247, 251);}
-              tbody{background-color: fff;}
-              th, td { border: 1px solid black; padding: 8px; text-align: left; }
-              th svg{display:none} 
-              th {
-  white-space: nowrap !important;
-  font-weight: 600 !important;
-}
-            </style>
-          </head>
-          <body>
-            ${printSection.outerHTML}  <!-- Use outerHTML to include the table element -->
-          </body>
-        </html>
-      `);
+      if (printWindow) {
+        printWindow.document.write(`
+          <html>
+            <head>
+              <title>Print</title>
+              <style>
+                /* Add necessary styles to preserve layout */
+                body { font-family: Arial, sans-serif; margin: 20px; }
+                table { border-collapse: collapse; width: 100%; }
+                theade{background-color: rgb(246, 247, 251);}
+                tbody{background-color: fff;}
+                th, td { border: 1px solid black; padding: 8px; text-align: left; }
+                th svg{display:none} 
+                th {
+    white-space: nowrap !important;
+    font-weight: 600 !important;
+  }
+              </style>
+            </head>
+            <body>
+              ${printSection.outerHTML}  <!-- Use outerHTML to include the table element -->
+            </body>
+          </html>
+        `);
 
-      printWindow.document.close();
+        printWindow.document.close();
 
-      printWindow.onload = () => {
-        printWindow.focus();
-        printWindow.print();
-        printWindow.close();
-      };
+        printWindow.onload = () => {
+          printWindow.focus();
+          printWindow.print();
+          printWindow.close();
+        };
+      }
     }
   }
 };

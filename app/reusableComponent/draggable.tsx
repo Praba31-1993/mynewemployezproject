@@ -101,27 +101,28 @@ const DraggableComponent = () => {
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsDragging(true);
+    if (document !== undefined) {
+      const handleMouseMove = (e: MouseEvent) => onDrag(e);
 
-    const handleMouseMove = (e: MouseEvent) => onDrag(e);
+      const handleMouseUp = () => {
+        setIsDragging(false);
+        setPosition((prevPosition) => {
+          const newPosition = { ...prevPosition };
+          if (prevPosition.x > 50) {
+            newPosition.x = 100; // Snap to the right
+          } else {
+            newPosition.x = 0; // Snap to the left
+          }
+          return newPosition;
+        });
 
-    const handleMouseUp = () => {
-      setIsDragging(false);
-      setPosition((prevPosition) => {
-        const newPosition = { ...prevPosition };
-        if (prevPosition.x > 50) {
-          newPosition.x = 100; // Snap to the right
-        } else {
-          newPosition.x = 0; // Snap to the left
-        }
-        return newPosition;
-      });
+        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mouseup", handleMouseUp);
+      };
 
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+    }
   };
 
   return (
