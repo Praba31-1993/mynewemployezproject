@@ -14,7 +14,6 @@ import {
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Player from "lottie-react";
 import { Colors } from "../reusableComponent/styles";
 import Logintextanimation from "../reusableComponent/logintextanimation";
 import { initializeRole } from "../redux/slices/roleSlice";
@@ -29,10 +28,6 @@ import dynamic from "next/dynamic";
 
 export default function Login() {
   const useColors = Colors();
-  const [loginanimationData, setLoginAnimationData] = useState<Record<
-    string,
-    any
-  > | null>(null);
   const [userDetails, setUserDetails] = useState<User | null>(null);
   const [checked, setChecked] = useState(false);
   const [userId, setUserId] = useState("");
@@ -40,12 +35,11 @@ export default function Login() {
   const [errors, setErrors] = useState({ userId: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [loginToken, setLoginToken] = useState();
-  const [loginfirstName, setLoginfirstName] = useState();
-  const [loginlastName, setLoginlastName] = useState();
-  const [loginrole, setLoginRole] = useState();
-  const [loginbunit, setLoginBunit] = useState();
   const [role, setRole] = useState<string | null>(null);
+  const [loginanimationData, setLoginAnimationData] = useState<Record<
+    string,
+    any
+  > | null>(null);
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
   const Player = dynamic(() => import("lottie-react"), { ssr: false });
@@ -161,7 +155,7 @@ export default function Login() {
             style={{ background: useColors.themeRed }}
           >
             <h1 className="heading fw-bold text-center py-3 text-white">
-              HR on Cloud++
+              HR on Cloud
             </h1>
             {loginanimationData && (
               <Player autoplay loop animationData={loginanimationData} />
