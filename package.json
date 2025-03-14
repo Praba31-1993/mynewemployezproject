@@ -29,7 +29,10 @@
     "react-loading-skeleton": "^3.5.0",
     "react-redux": "^9.1.2",
     "react-toastify": "^10.0.6",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",
