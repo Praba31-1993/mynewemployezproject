@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, ReactNode, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -44,10 +44,8 @@ import PaidOutlinedIcon from "@mui/icons-material/PaidOutlined";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import BubbleChartOutlinedIcon from "@mui/icons-material/BubbleChartOutlined";
 import DnsOutlinedIcon from "@mui/icons-material/DnsOutlined";
-import dashboardWhite from "@/public/assets/img/dashboard-white.svg";
-import dashboardGrey from "@/public/assets/img/dashboard-grey.svg";
-import timesheetGrey from "@/public/assets/img/timesheet_grey.svg";
-import timesheetWhite from "@/public/assets/img/timesheet_white.svg";
+import { ReactNode } from "react";
+
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { Colors } from "../reusableComponent/styles";
 import {
@@ -57,7 +55,7 @@ import {
 import Timeloader from "../reusableComponent/loader/timeloader";
 
 interface SidebarProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 const getMenuItems = (role: string) => {
