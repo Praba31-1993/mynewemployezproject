@@ -15,11 +15,13 @@ import Sidebar from "../sidebar/layout";
 const Dashboard = () => {
   const [role, setRole] = useState<string | null>(null);
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const userRole = localStorage.getItem("Role");
-      setRole(userRole);
-    }
+    // Ensure this logic runs only on the client-side
+    const userRole =
+      typeof window !== "undefined" ? localStorage.getItem("Role") : null;
+    setRole(userRole);
   }, []);
+
+  if (!role) return <div>Loading...</div>; // Optional: Show a loader during role fetching
 
   return (
     <Sidebar>
