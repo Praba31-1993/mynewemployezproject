@@ -5,7 +5,7 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import ClickableChips from "../chips";
 import PaginationComponent from "../paginationcomponent";
-import { CenterPopup } from "../popup/centerPopup";
+// import { CenterPopup } from "../popup/centerPopup";
 import Deleteconfirmationpopup from "../popup/deleteconfirmationpopup";
 
 interface Column {
@@ -151,9 +151,9 @@ const TableWithSort: React.FC<TableProps> = ({
           ))}
         </tbody>
       </table>
-      {showdetails && (
+      {/* {showdetails && (
         <CenterPopup show={showdetails} close={() => setDetails(false)} />
-      )}
+      )} */}
       {confirmDelete && (
         <Deleteconfirmationpopup
           show={confirmDelete}
