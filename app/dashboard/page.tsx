@@ -1,11 +1,13 @@
 "use client";
-import React  from "react";
+export const dynamic = "force-dynamic"; // Keep this
+
+import React from "react";
+import { default as dynamicImport } from "next/dynamic"; // Renamed import
 import SuperAdminDashboard from "./screens/superadmin";
 
-import dynamic from "next/dynamic";
+const Sidebar = dynamicImport(() => import("../sidebar/layout"), { ssr: false });
 
 const Dashboard = () => {
-  const Sidebar = dynamic(() => import("../sidebar/layout"), { ssr: false });
   return (
     <Sidebar>
       <SuperAdminDashboard />
