@@ -75,7 +75,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const [isPinned, setIsPinned] = useState(false);
   const selectedColor = useSelector((state: RootState) => state.color.color);
   const router = useRouter();
-
+  const isClient = typeof window !== "undefined";
   const selectedMeedingModeBorder = useSelector(
     (state: RootState) => state.meetingmode.background
   );
@@ -85,7 +85,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const thislogintoken =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    isClient ? localStorage.getItem("token") : null;
     setAuth(thislogintoken);
 
     // Redirect to login if token is not available
@@ -97,7 +97,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
     setIsChecked(checked);
-    if (typeof window !== "undefined") {
+    if (isClient) {
       localStorage.setItem("pinned", isChecked.toString());
     }
     setIsOpen(checked);
