@@ -25,10 +25,14 @@ import { useRouter } from "next/navigation";
 import { loginUser } from "../redux/slices/loginSlice";
 import { setBunit } from "../redux/slices/bunitSlice";
 import Timeloader from "../reusableComponent/loader/timeloader";
+import dynamic from "next/dynamic";
 
 export default function Login() {
   const useColors = Colors();
-  const loginanimationData = require("@/public/assets/EmployEz-login-animation.json");
+  const [loginanimationData, setLoginAnimationData] = useState<Record<
+    string,
+    any
+  > | null>(null);
   const [userDetails, setUserDetails] = useState<User | null>(null);
   const [checked, setChecked] = useState(false);
   const [userId, setUserId] = useState("");
@@ -44,6 +48,7 @@ export default function Login() {
   const [role, setRole] = useState<string | null>(null);
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
+  const Player = dynamic(() => import("lottie-react"), { ssr: false });
 
   // ✅ Use `useEffect` for accessing localStorage safely
   useEffect(() => {
@@ -52,6 +57,13 @@ export default function Login() {
       setRole(storedRole || null);
     }
   }, []);
+
+  useEffect(() => {
+    import("@/public/assets/EmployEz-login-animation.json")
+      .then((data) => setLoginAnimationData(data.default))
+      .catch((error) => console.error("Failed to load animation", error));
+  }, []);
+
   useEffect(() => {
     if (typeof window !== "undefined" && window.localStorage) {
       // 👈 Prevent SSR errors
@@ -90,33 +102,44 @@ export default function Login() {
   const handleSubmit = async () => {
     const userIdError = validateUserId(userId);
     const passwordError = validatePassword(password);
-  
+
     setErrors({ userId: userIdError, password: passwordError });
-  
+
     if (!userIdError && !passwordError) {
       const params = {
         usernameOrEmail: userId,
         password: password,
       };
-  
+
       setIsLoading(true);
       const loginResponse = await dispatch(loginUser(params));
       dispatch(initializeRole(loginResponse.payload.userInfo));
-  
+
       if (loginResponse.payload.status === undefined) {
         setUserDetails(loginResponse.payload.userInfo);
-        dispatch(setBunit({ bunit: loginResponse.payload.userInfo.businessUnit }));
+        dispatch(
+          setBunit({ bunit: loginResponse.payload.userInfo.businessUnit })
+        );
         toast.success("Login successful");
-  
+
         // ✅ Store data in localStorage only if available
         if (typeof window !== "undefined") {
           localStorage.setItem("token", loginResponse.payload.token);
-          localStorage.setItem("Firstname", loginResponse.payload.userInfo.firstName);
-          localStorage.setItem("Lastname", loginResponse.payload.userInfo.lastName);
+          localStorage.setItem(
+            "Firstname",
+            loginResponse.payload.userInfo.firstName
+          );
+          localStorage.setItem(
+            "Lastname",
+            loginResponse.payload.userInfo.lastName
+          );
           localStorage.setItem("Role", loginResponse.payload.userInfo.role);
-          localStorage.setItem("bunit", loginResponse.payload.userInfo.businessUnit);
+          localStorage.setItem(
+            "bunit",
+            loginResponse.payload.userInfo.businessUnit
+          );
         }
-  
+
         setTimeout(() => {
           setIsLoading(false);
           router.push("/dashboard");
@@ -127,7 +150,6 @@ export default function Login() {
       }
     }
   };
-  
 
   return (
     <section className="login">
@@ -141,12 +163,9 @@ export default function Login() {
             <h1 className="heading fw-bold text-center py-3 text-white">
               HR on Cloud++
             </h1>
-            <Player
-              autoplay
-              loop
-              animationData={loginanimationData}
-              style={{ height: "60%", width: "60%" }}
-            />
+            {loginanimationData && (
+              <Player autoplay loop animationData={loginanimationData} />
+            )}
             <Logintextanimation />
           </div>
           <div className="col-md-6 d-flex align-items-center justify-content-center">
