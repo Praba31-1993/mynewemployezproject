@@ -17,7 +17,16 @@ const Dashboard = () => {
   const Sidebar = dynamic(() => import("../sidebar/layout"), {
     ssr: false,
   });
-  
+  const SuperAdminDynamicDashboard = dynamic(
+    () => import("./screens/superadmin"),
+    {
+      ssr: false,
+    }
+  );
+
+  const EmployeeDynamicDashboard = dynamic(() => import("./screens/employee"), {
+    ssr: false,
+  });
   useEffect(() => {
     if (typeof window !== "undefined") {
       const userRole = localStorage.getItem("Role");
@@ -27,16 +36,9 @@ const Dashboard = () => {
 
   return (
     <Sidebar>
-      {role === "SA" && <SuperAdminDashboard />}
-      {role === "HR" && <HrDashboard />}
-      {role === "M" && <ManagerDashboard />}
-      {role === "E" && <EmployeeDashboard />}
-      {role === "R" && <RecruiterDashboard />}
-      {/* <Immigratorcoordinator/> */}
-      {role === "TC" && <TimecoordinatorDashboard />}
-      {/* <PayrollAdminDashboard/> */}
-      {/* <PayRoleExecutiveDashboard/> */}
-      {role === "SM" && <SalesManagerDashboard />}
+      {role === "SA" && <SuperAdminDynamicDashboard />}
+
+      {role === "E" && <EmployeeDynamicDashboard />}
     </Sidebar>
   );
 };
