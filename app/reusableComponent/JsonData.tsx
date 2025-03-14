@@ -2,6 +2,7 @@ import dashboardWhite from "@/public/assets/img/dashboard-white.svg";
 import dashboardGrey from "@/public/assets/img/dashboard-grey.svg";
 import timesheetGrey from "@/public/assets/img/timesheet_grey.svg";
 import timesheetWhite from "@/public/assets/img/timesheet_white.svg";
+import { typeOfDaysProps } from "./interfacetypes";
 
 export const loginResponse1 = [
   {
@@ -1816,7 +1817,7 @@ export const Logindata = [
   { name: "Suresh", DOB: "2024-10-08", number: "956324515", country: "INDIA" },
 ];
 
-export const typeOfDays: any = [
+export const typeOfDays: typeOfDaysProps[] = [
   {
     id: 1,
     name: "Full Day",
